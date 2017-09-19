@@ -11,7 +11,7 @@ How many numbers of 7 or less digits whose last 3 (digits) are 388 are multiples
 It is indeed a really nice mathematical problem.
 A quick and easy solution that I figured out and doesn't involve too much theory:
 
-The problem asks to find out ![x](http://github.com/novalic/mathProblems/x.png) digit numbers for ![x in 3...7](http://github.com/novalic/mathProblems/xin37.png) whose last 3 digits are 388 (and count them).
+The problem asks to find out ![x](/images/x.png) digit numbers for ![x in 3...7](http://github.com/novalic/mathProblems/xin37.png) whose last 3 digits are 388 (and count them).
 
 So for every number ![n](http://github.com/novalic/mathProblems/n.png) it's easy to see that ![n \times 10^{number of digits in n} + n](http://github.com/novalic/mathProblems/ndigits.png), the result is divisible by ![n](http://github.com/novalic/mathProblems/n.png) and ends with the same digits as ![n](http://github.com/novalic/mathProblems/n.png).
 i.e: 
