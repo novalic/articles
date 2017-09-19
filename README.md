@@ -2,7 +2,7 @@
 
 These are some interesting math problems on which I programmed solutions.
 
-## [388.py](http://github.com/novalic/mathProblems/388.py)
+## [388.py](/388.py)
 
 This is a nice problem that formed part of my University's math workshops for highschool students:
 ```
@@ -11,28 +11,28 @@ How many numbers of 7 or less digits whose last 3 (digits) are 388 are multiples
 It is indeed a really nice mathematical problem.
 A quick and easy solution that I figured out and doesn't involve too much theory:
 
-The problem asks to find out ![x](/images/x.png) digit numbers for ![x in 3...7](http://github.com/novalic/mathProblems/xin37.png) whose last 3 digits are 388 (and count them).
+The problem asks to find out ![x](/images/x.png) digit numbers for ![x in 3...7](xin37.png) whose last 3 digits are 388 (and count them).
 
-So for every number ![n](http://github.com/novalic/mathProblems/n.png) it's easy to see that ![n \times 10^{number of digits in n} + n](http://github.com/novalic/mathProblems/ndigits.png), the result is divisible by ![n](http://github.com/novalic/mathProblems/n.png) and ends with the same digits as ![n](http://github.com/novalic/mathProblems/n.png).
+So for every number ![n](/images/n.png) it's easy to see that ![n \times 10^{number of digits in n} + n](/images/ndigits.png), the result is divisible by ![n](/images/n.png) and ends with the same digits as ![n](/images/n.png).
 i.e: 
-![example](http://github.com/novalic/mathProblems/ex1.png)
-![example](http://github.com/novalic/mathProblems/ex2.png)
+![example](/images/ex1.png)
+![example](/images/ex2.png)
 
-And in particular ![388 times 1001](http://github.com/novalic/mathProblems/388times.png).
+And in particular ![388 times 1001](/images/388times.png).
 
 So we can formulate it like this:
-![388k < ](http://github.com/novalic/mathProblems/388kless.png)
+![388k < ](/images/388kless.png)
 if we divide by 388 and round up:
-![k < ](http://github.com/novalic/mathProblems/kless.png)
+![k < ](/images/kless.png)
 
-So ![388k < ](http://github.com/novalic/mathProblems/388kless.png) if ![k < ](http://github.com/novalic/mathProblems/kless.png).
+So ![388k < ](/images/388kless.png) if ![k < ](/images/kless.png).
 
-Now, as the prime decomposition of 388 is ![](http://github.com/novalic/mathProblems/2297.png), we can write 388 as ![](http://github.com/novalic/mathProblems/388k.png).
-Now ![primedec](http://github.com/novalic/mathProblems/497.png) so every 250 k's we have a multiple of 388 that ends with three zeros, and if we add 388 to that number, we have found one of the numbers we are looking for.
+Now, as the prime decomposition of 388 is ![](/images/2297.png), we can write 388 as ![](/images/388k.png).
+Now ![primedec](/images/497.png) so every 250 k's we have a multiple of 388 that ends with three zeros, and if we add 388 to that number, we have found one of the numbers we are looking for.
 So now we see how many of this numbers are in the valid range:
-![](http://github.com/novalic/mathProblems/103.png)
+![](/images/103.png)
 
-So ![](http://github.com/novalic/mathProblems/sols.png) are all valid numbers. But we are not counting the solution: ![](http://github.com/novalic/mathProblems/388.png) that we weren't counting!
+So ![](/images/sols.png) are all valid numbers. But we are not counting the solution: ![](/images/388.png) that we weren't counting!
 
 Adding up, in total theres 104 numbers seven digits or less whose last three digits are 388 in that order. 
 
