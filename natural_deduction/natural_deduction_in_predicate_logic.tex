@@ -1,0 +1,307 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{bussproofs}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+
+\newenvironment{scprooftree}[1]%
+  {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+  {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+\begin{document}
+
+{\Huge Natural Deduction on Predicate Logic} \\
+
+All this work is based on the book \textit{Logic and Structure} by Dirk Van Dalen.
+
+\section*{Strategy to build correct derivations in Predicate Logic}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+\textbf{From an university test:} \\ \\
+
+Let $\Gamma = \{(\exists x)P_1(x), (\exists x)(\exists y)(\neg P_2 (x, y)), (\forall x)(P_1 (x) \rightarrow (\exists y)P_2 (x,y)) \}$ \\
+
+Build a derivation that proves the following: \\
+$$\Gamma \cup \{ (\forall x)(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y)) \} \vdash (\exists x)(\exists y)(\neg P_3 (x, y))$$
+    }%
+}
+\newline
+\newline\newline
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+First of all build the derivation without canceling any hypotheses:\\
+    }%
+}
+\begin{scprooftree}{0.8}
+  \AxiomC{$(\exists x)(\exists y)(\neg P_2 (x, y))$}
+  \AxiomC{$(\exists y)(\neg P_2 (x, y))$}
+  \AxiomC{$\neg P_2 (x, y)$}
+  \AxiomC{$(\forall x)(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *6}$}
+  \UnaryInfC{$(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *5}$}
+  \UnaryInfC{$P_3 (x,y) \leftrightarrow P_2 (x,y)$}
+  \AxiomC{$P_3 (x, y)$}
+  \RightLabel{$E_{\leftrightarrow 1}$}
+  \BinaryInfC{$P_2 (x, y)$}
+  \RightLabel{$E_{\neg}$}
+  \BinaryInfC{$\bot$}
+  \LeftLabel{(3)}
+  \RightLabel{$I_{\neg}$}
+  \UnaryInfC{$\neg P_3 (x, y)$}
+  \RightLabel{$I_{\exists *4}$}
+  \UnaryInfC{$(\exists y)(\neg P_3 (x, y))$}
+  \RightLabel{$I_{\exists *3}$}
+  \UnaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(2)}
+  \RightLabel{$E_{\exists *2}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(1)}
+  \RightLabel{$E_{\exists *1}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+\end{scprooftree}
+
+
+During the construction the following hypotheses were generated:
+\begin{enumerate}
+\item $(\exists y)(\neg P_2 (x, y))$
+\item $\neg P_2 (x, y)$
+\item $P_3 (x, y)$
+\end{enumerate}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+Next, start checking every atomic step top-down. In each atomic step, if the rule needs proofs we write them down. If the rule generated hypotheses we cancel them. If you can give a correct proof for all rules that need it, the derivation is correct. \\
+    }%
+}
+\begin{itemize}
+  \item [$E_{\forall *6}$]:
+  \item This rule doesn't generate hypotheses.
+  \item \textbf{*6 justification:} $x$ is free for $x$ in any formula (in particular, in: $(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$).
+\end{itemize}
+
+\begin{itemize}
+  \item [$E_{\forall *5}$:]
+  \item This rule doesn't generate hypotheses.
+  \item \textbf{*5 justification:} $y$ is free for $y$ in any formula (in particular, in $(P_3 (x,y) \leftrightarrow P_2 (x,y))$). 
+\end{itemize}
+
+\begin{itemize}
+  \item [$E_{\leftrightarrow 1}$:]
+  \item This rule doesn't generate hypotheses and doesn't need justification. 
+\end{itemize}
+
+\begin{itemize}
+  \item [$E_{\neg 1}$:]
+  \item This rule doesn't generate hypotheses doesn't need justification.
+\end{itemize}
+\newpage
+
+\begin{itemize}
+  \item [$I_{\neg 1}$:]
+  \item This rule generates the hypotheses ($P_3 (x, y)$), se let's cancel it.
+  \item This rule doesn't need justification.\\
+\end{itemize}
+
+The derivation at this step is: \\
+
+\begin{scprooftree}{0.8}
+  \AxiomC{$(\exists x)(\exists y)(\neg P_2 (x, y))$}
+  \AxiomC{$(\exists y)(\neg P_2 (x, y))$}
+  \AxiomC{$\neg P_2 (x, y)$}
+  \AxiomC{$(\forall x)(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *6}$}
+  \UnaryInfC{$(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *5}$}
+  \UnaryInfC{$P_3 (x,y) \leftrightarrow P_2 (x,y)$}
+  \AxiomC{$[P_3 (x, y)]^3$}
+  \RightLabel{$E_{\leftrightarrow 1}$}
+  \BinaryInfC{$P_2 (x, y)$}
+  \RightLabel{$E_{\neg}$}
+  \BinaryInfC{$\bot$}
+  \LeftLabel{(3)}
+  \RightLabel{$I_{\neg}$}
+  \UnaryInfC{$\neg P_3 (x, y)$}
+  \RightLabel{$I_{\exists *4}$}
+  \UnaryInfC{$(\exists y)(\neg P_3 (x, y))$}
+  \RightLabel{$I_{\exists *3}$}
+  \UnaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(2)}
+  \RightLabel{$E_{\exists *2}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(1)}
+  \RightLabel{$E_{\exists *1}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+\end{scprooftree}
+
+\begin{itemize}
+  \item [$I_{\exists *4}$:]
+  \item This rule doesn't generate hypotheses.
+  \item \textbf{*4 justification:} $y$ is free for $y $ in any formula (in particular, in $\neg P_3 (x,y)$).
+\end{itemize}
+
+\begin{itemize}
+  \item [$I_{\exists *3}$:]
+  \item This rule doesn't generate hypotheses.
+  \item \textbf{*3 justification:} $x$ is free for $x$ in any formula (in particular, in $(\exists y)(\neg P_3 (x,y))$).
+\end{itemize}
+
+\begin{itemize}
+  \item [$E_{\exists *2}$:]
+  \item This rule generates the hypotheses $\neg P_2 (x, y)$, let's cancel it.
+  \item \textbf{*2 justification:} $y \not\in$ $FV((\exists x)(\exists y)(\neg P_3 (x, y)))$, $y \not\in$ $FV((\forall x)(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y)))$. \\
+  \textbf{Note that there's no need to check if other hypotheses contain $y$ free: ($P_3 (x,y)$ ni en $\neg P_2 (x,y)$) as in this step they are canceled.}\\
+\end{itemize}
+
+The derivation at this step is: \\
+\begin{scprooftree}{0.8}
+  \AxiomC{$(\exists x)(\exists y)(\neg P_2 (x, y))$}
+  \AxiomC{$(\exists y)(\neg P_2 (x, y))$}
+  \AxiomC{$[\neg P_2 (x, y)]^2$}
+  \AxiomC{$(\forall x)(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *6}$}
+  \UnaryInfC{$(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *5}$}
+  \UnaryInfC{$P_3 (x,y) \leftrightarrow P_2 (x,y)$}
+  \AxiomC{$[P_3 (x, y)]^3$}
+  \RightLabel{$E_{\leftrightarrow 1}$}
+  \BinaryInfC{$P_2 (x, y)$}
+  \RightLabel{$E_{\neg}$}
+  \BinaryInfC{$\bot$}
+  \LeftLabel{(3)}
+  \RightLabel{$I_{\neg}$}
+  \UnaryInfC{$\neg P_3 (x, y)$}
+  \RightLabel{$I_{\exists *4}$}
+  \UnaryInfC{$(\exists y)(\neg P_3 (x, y))$}
+  \RightLabel{$I_{\exists *3}$}
+  \UnaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(2)}
+  \RightLabel{$E_{\exists *2}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(1)}
+  \RightLabel{$E_{\exists *1}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+\end{scprooftree}
+
+\newpage
+
+\begin{itemize}
+\item [$E_{\exists *1}$:]
+\item This rule generates the hypotheses: $(\exists y)(\neg P_2 (x, y))$, let's cancel it.
+\item \textbf{*1 justification:} $x \not\in$ $FV((\exists x)(\exists y)(\neg P_3 (x, y)))$, $x \not\in$ $FV((\forall x)(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y)))$.\\
+\textbf{Let's note that for this case also there's no need to check if any other hypotheses contain $x$ free: ($P_3 (x,y)$ ni en $\neg P_2 (x,y)$) because they are all canceled.}\\
+\end{itemize}
+
+The derivation at this step is: \\
+
+\begin{scprooftree}{0.8}
+  \AxiomC{$(\exists x)(\exists y)(\neg P_2 (x, y))$}
+  \AxiomC{$[(\exists y)(\neg P_2 (x, y))]^1$}
+  \AxiomC{$[\neg P_2 (x, y)]]^2$}
+  \AxiomC{$(\forall x)(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *6}$}
+  \UnaryInfC{$(\forall y)(P_3 (x,y) \leftrightarrow P_2 (x,y))$}
+  \RightLabel{$E_{\forall *5}$}
+  \UnaryInfC{$P_3 (x,y) \leftrightarrow P_2 (x,y)$}
+  \AxiomC{$[P_3 (x, y)]^3$}
+  \RightLabel{$E_{\leftrightarrow 1}$}
+  \BinaryInfC{$P_2 (x, y)$}
+  \RightLabel{$E_{\neg}$}
+  \BinaryInfC{$\bot$}
+  \LeftLabel{(3)}
+  \RightLabel{$I_{\neg}$}
+  \UnaryInfC{$\neg P_3 (x, y)$}
+  \RightLabel{$I_{\exists *4}$}
+  \UnaryInfC{$(\exists y)(\neg P_3 (x, y))$}
+  \RightLabel{$I_{\exists *3}$}
+  \UnaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(2)}
+  \RightLabel{$E_{\exists *2}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+  \LeftLabel{(1)}
+  \RightLabel{$E_{\exists *1}$}
+  \BinaryInfC{$(\exists x)(\exists y)(\neg P_3 (x, y))$}
+\end{scprooftree}
+
+And this, together with the justifications is the complete finished derivation.
+
+\newpage
+
+\section{How to use identity rules.}
+
+Special thanks to Prof. Luis Sierra (FIng UdelaR) for the corrections. \\
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+\textbf{From an university test:} \newline \newline
+Build a derivation that proves:
+$$(\forall x)P(x, f(x)), (\exists y)f(y) =' y \vdash (\exists z)P(f(z), z)$$
+    }%
+}
+\newline \newline
+
+First of all, looking at the premises we can figure out that to reach the conclusion, using substition in the application of the rule $E_{\forall}$ won't lead us anywhere. For example, if we wanted to reach $(\exists z)P(f(z), z)$ with the premise $(\forall x)P(x, f(x))$, we should apply the rule $E_{\forall}$. If we wanted to obtain $f(z)$ instead of $x$, when substituting, we would get $P(f(z), f(f(z)))$. The only way to swawp the arguments of $P$ is by using the rule $RI4'$. \\
+
+Let's build the derivation: \\
+
+All we can do with the premises we have is an existential elimination:
+
+\begin{prooftree}
+\AxiomC{$(\exists y)f(y) =' y$}
+\AxiomC{$(\exists z)P(f(z), z)$}
+\LeftLabel{(1)}
+\RightLabel{$E_{\exists *1}$}
+\BinaryInfC{$(\exists z)P(f(z), z)$}
+\end{prooftree}
+
+Here, we obtained the hypotheses $f(y) =' y$. Checking the premises again we can see that with $(\forall x)P(x, f(x))$, by applying the rule $E_{\forall}$ and substituting adequately we obtain $P(y, f(y))$. If we manage to substitute in this formula in a way that we get $P(f(y), y)$, applying the rule $I_{\exists}$ and substituting adequately we can obtain $(\exists z)P(f(z), z)$. We can do this by using the identity rule $RI4'$.
+Doing this, the resulting derivation is:
+
+\begin{prooftree}
+  \AxiomC{$(\exists y)f(y) =' y$}
+  \AxiomC{$(\forall x)P(f(x), x)$}
+  \UnaryInfC{$P(f(y), y)$}
+  \AxiomC{$f(y) =' y$}
+  \AxiomC{$f(y) =' y$}
+  \UnaryInfC{$y =' f(y)$}
+  \TrinaryInfC{$P(f(y), y)$}
+  \UnaryInfC{$(\exists z)P(f(z), z)$}
+  \LeftLabel{(1)}
+  \RightLabel{$E_{\exists *1}$}
+  \BinaryInfC{$(\exists z)P(f(z), z)$}
+\end{prooftree}
+
+By adding the rules in each step and using the strategy of the previous example, we have built the derivation: \\
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+ \textbf{*4}: $y$ free for $x$ in $P(f(x), x).$ \\
+ \textbf{*3}: $y$ free for $z_1$; $f(y)$ free for $z_2$ en $P(z_1,z_2)$. \\
+ $f(y)$ free for $z_1$; $y$ free for $z_2$ en $P(z_1,z_2)$.\\
+ \textbf{*2}: $y$ free for $z$ en $P(f(z), z)$.\\
+ \textbf{*1}: $y$ $\not \in$ $FV(\{(\exists z)P(f(z), z), (\forall x)P(f(x), x)\}).$
+    }%
+}
+
+\begin{prooftree}
+  \AxiomC{$(\exists y)f(y) =' y$}
+  \AxiomC{$[f(y) =' y]^1$}
+  \RightLabel{$RI2$}
+  \UnaryInfC{$y =' f(y)$}
+  \AxiomC{$[f(y) =' y]^1$}
+  \AxiomC{$(\forall x)P(x, f(x))$}
+  \RightLabel{$E_{\forall *4}$}
+  \UnaryInfC{$P(z_1,z_2)[y/z_1,f(y)/z_2])$}
+  \RightLabel{$RI4'_{*3}$}
+  \TrinaryInfC{$P(z_1,z_2)[f(y)/z_1,y/z_2)]$}
+  \RightLabel{$I_{\exists *2}$}
+  \UnaryInfC{$(\exists z)P(f(z), z)$}
+  \LeftLabel{(1)}
+  \RightLabel{$E_{\exists *1}$}
+  \BinaryInfC{$(\exists z)P(f(z), z)$}
+\end{prooftree}
+
+\end{document}
