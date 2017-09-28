@@ -8,5 +8,5 @@ I think the main problem is that it's hard to get lost into the construction if 
 
 ## What's in this folder?
 
-- Here's the original latex file where I wrote the document which was originally written in spanish. So if you find an error or any kind please submit your corrections.
+- Here's the original latex file of the document (which was originally written in spanish). So if you find an error or any kind please submit your corrections.
 - Also you will find the latest [PDF](https://github.com/novalic/mathProblems/blob/master/natural_deduction/document.pdf) file generated from the latex file.

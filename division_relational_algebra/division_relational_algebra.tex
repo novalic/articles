@@ -1,0 +1,302 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{listings}
+
+\definecolor{myred}{RGB}{255, 0, 0}
+\definecolor{mywhat}{RGB}{255, 0, 219}
+\definecolor{mygreen}{RGB}{0, 255, 0}
+\definecolor{myblue}{RGB}{0, 0, 255}
+
+\begin{document}
+\title{% 
+		\LARGE \textbf{Division in relational algebra} \\
+        }
+\author{
+	Nicolas Novalic
+}
+\begin{center}
+	{\Huge Understanding the division operator\\ in Relational Algebra} \\
+\end{center}
+
+First lets take a quick look at how the operator works. Say we have two relations, $R$ with schema: $(A, B)$ and $S$ with schema: $(B)$. An instance of them could be:
+\vskip 0.2in
+
+\parbox{.45\linewidth}{
+\begin{center}
+  \begin{tabular}{ll}
+  	\hline
+    A & B \\
+    \hline
+    \multicolumn{1}{|c|}{a} & \multicolumn{1}{c|}{1} \\ \hline
+	\multicolumn{1}{|c|}{a} & \multicolumn{1}{c|}{2} \\ \hline
+    \multicolumn{1}{|c|}{a} & \multicolumn{1}{c|}{7} \\ \hline
+    \multicolumn{1}{|c|}{b} & \multicolumn{1}{c|}{1} \\ \hline
+  \end{tabular}
+\end{center}
+}
+\parbox{.45\linewidth}{
+\begin{center}
+  \begin{tabular}{l}
+  	\hline
+    B \\
+    \hline
+    \multicolumn{1}{|c|}{1} \\ \hline
+	\multicolumn{1}{|c|}{7} \\ \hline
+    \multicolumn{1}{|c|}{2} \\ \hline
+  \end{tabular}
+\end{center}
+}
+\vskip 0.2in
+If we name $P$ and $Q$ these instances of $R$  and $S$ respectively, the result of $P \div Q$ is:
+\vskip 0.2in
+\begin{center}
+  \begin{tabular}{l}
+  	\hline
+    A \\
+    \hline
+    \multicolumn{1}{|c|}{a} \\ \hline
+  \end{tabular}
+\end{center}
+\vskip 0.2in
+
+What happened here? The division operator took all the values from attribute $A$ that were in a relation (in $R$) with \textbf{all} the values of the $B$ attribute in $S$.
+We were able to perform the operation because the last attribute of $R$ had the same name as the attribute on $S$. In general, the last attributes of the first operator \textbf{must} have the same name as the attributes in the second operator and \textbf{must} be in the same order.
+\vskip 0.2in
+\noindent\fbox{\parbox{\textwidth}{%
+Given two relations, $R1$ and $R2$ and their schema: $(A_1,\dots,A_n,B_1,\dots,B_m)$ and $(B_1,\dots,B_m)$ resp., $R1 \div R2$ retrieves a relation $R3$ with schema $(A_1,\dots,A_n)$ where all the sub-tuples $(A_1,\dots,A_n)$ of $R1$ were in a relation with every tuple of $R2$.
+}}
+\subsection*{Advanced example and explanation}
+
+Consider the following instances of the relations $R1$ and $R2$ defined before:
+\vskip 0.2in
+
+\parbox{.45\linewidth}{
+\begin{center}
+  \begin{tabular}{lllll}
+  	\hline
+    A & B & C & D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_z$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_\phi$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_q$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_w$} & \multicolumn{1}{c|}{$w_u$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_x$} & \multicolumn{1}{c|}{$w_h$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_q$} & \multicolumn{1}{c|}{$w_a$}\\ \hline
+	\multicolumn{1}{|c|}{$x_2$} & \multicolumn{1}{c|}{$y_5$} & \multicolumn{1}{c|}{$z_1$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_2$} & \multicolumn{1}{c|}{$y_4$} & \multicolumn{1}{c|}{$z_1$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_x$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_x$} & \multicolumn{1}{c|}{$w_h$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_q$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_w$} & \multicolumn{1}{c|}{$w_u$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_z$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_1$} & \multicolumn{1}{c|}{$z_1$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_\phi$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+  \end{tabular}
+\end{center}
+}
+\parbox{.45\linewidth}{
+\begin{center}
+  \begin{tabular}{ll}
+  	\hline
+    D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$w_z$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$w_\phi$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$w_b$} & \multicolumn{1}{c|}{$w_q$}\\ \hline
+    \multicolumn{1}{|c|}{$w_w$} & \multicolumn{1}{c|}{$w_u$}\\ \hline
+    \multicolumn{1}{|c|}{$w_b$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$w_x$} & \multicolumn{1}{c|}{$w_h$}\\ \hline
+  \end{tabular}
+\end{center}
+}
+\newpage
+\parbox{.70\linewidth}{
+Let's name $X$ and $Y$ the previous instances of $R1$ and $R2$ respectively. \\
+
+\vskip 0.2in
+Now, I will show a really easy way to understand the operator. It's nothing formal, just a way to see things. It consists on taking the table $X$ and group it by the attributes $(A,B,C)$, just like you do in SQL when using the \textbf{GROUP BY} statement. The groups are then represented by the value of their respective $(A,B,C)$ attributes. Now we assign a set to each one of these groups, which contains all the pairs of values of the attributes $(D,E)$ that are in a relation with the values that represent the group. Then we can check if the tuples of $Y$ are included on each of these sets, if they are, then the values that represent that grouping are added to the solution, otherwise they are not. This is a bit confusing, but really easy to understand with the an example.
+\vskip 0.2in
+We start by identifying the rows of the table that are equal two to two on their $(A,B,C)$ attributes. On table to the right we colored the identified groups.
+
+\vskip 0.2in
+}
+\parbox{.25\linewidth}{
+\begin{flushright}
+  \begin{tabular}{lllll}
+  	\hline
+    A & B & C & D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_a}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_b}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_z}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_z}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_\phi}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_z}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_b}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_q}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_w}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_u}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_b}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_b}$}\\ \hline
+
+	\multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_x}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_h}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myred}{x_1}$} & \multicolumn{1}{c|}{$\textcolor{myred}{y_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{z_2}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_q}$} & \multicolumn{1}{c|}{$\textcolor{myred}{w_a}$}\\ \hline
+    \multicolumn{1}{|c|}{$x_2$} & \multicolumn{1}{c|}{$y_5$} & \multicolumn{1}{c|}{$z_1$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+	\multicolumn{1}{|c|}{$\textcolor{mygreen}{x_2}$} & \multicolumn{1}{c|}{$\textcolor{mygreen}{y_4}$} & \multicolumn{1}{c|}{$\textcolor{mygreen}{z_1}$} & \multicolumn{1}{c|}{$\textcolor{mygreen}{w_a}$} & \multicolumn{1}{c|}{$\textcolor{mygreen}{w_b}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_a}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_x}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_a}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_b}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_x}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_h}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_b}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_q}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_w}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_u}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_z}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_z}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{mywhat}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{mywhat}{y_1}$} & \multicolumn{1}{c|}{$\textcolor{mywhat}{z_1}$} & \multicolumn{1}{c|}{$\textcolor{mywhat}{w_a}$} & \multicolumn{1}{c|}{$\textcolor{mywhat}{w_b}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_b}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_b}$}\\ \hline
+    \multicolumn{1}{|c|}{$\textcolor{myblue}{x_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{y_7}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{z_3}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_\phi}$} & \multicolumn{1}{c|}{$\textcolor{myblue}{w_z}$}\\ \hline
+
+\end{tabular}
+\end{flushright}
+}
+
+If split the colored table by color we obtain five sub-tables:
+
+\vskip 0.2in
+
+\parbox{.45\linewidth}{
+\begin{center}
+  \begin{tabular}{lllll}
+  	\hline
+    A & B & C & D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_z$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_\phi$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_q$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_w$} & \multicolumn{1}{c|}{$w_u$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_x$} & \multicolumn{1}{c|}{$w_h$}\\ \hline
+    \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} & \multicolumn{1}{c|}{$w_q$} & \multicolumn{1}{c|}{$w_a$}\\ \hline
+  \end{tabular}
+
+\vskip 0.2in
+
+  \begin{tabular}{lllll}
+  	\hline
+    A & B & C & D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$x_2$} & \multicolumn{1}{c|}{$y_5$} & \multicolumn{1}{c|}{$z_1$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+  \end{tabular}
+  
+\vskip 0.2in
+  
+  \begin{tabular}{lllll}
+  	\hline
+    A & B & C & D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$x_2$} & \multicolumn{1}{c|}{$y_4$} & \multicolumn{1}{c|}{$z_1$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+  \end{tabular}
+\end{center}
+}
+\parbox{.45\linewidth}{
+\begin{center}
+  \begin{tabular}{lllll}
+  	\hline
+    A & B & C & D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_x$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_x$} & \multicolumn{1}{c|}{$w_h$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_q$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_w$} & \multicolumn{1}{c|}{$w_u$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_z$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_b$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} & \multicolumn{1}{c|}{$w_\phi$} & \multicolumn{1}{c|}{$w_z$}\\ \hline
+  \end{tabular}
+  
+\vskip 0.2in
+ 
+  \begin{tabular}{lllll}
+  	\hline
+    A & B & C & D & E\\
+    \hline
+    \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_1$} & \multicolumn{1}{c|}{$z_1$} & \multicolumn{1}{c|}{$w_a$} & \multicolumn{1}{c|}{$w_b$}\\ \hline
+  \end{tabular}
+\end{center}
+}
+
+\vskip 0.2in
+
+Now let's see each of those tables like this:
+
+\begin{itemize}
+\item $(x_1,y_2,z_2) \rightarrow \{ (w_a,w_b), (w_z,w_z),(w_\phi,w_z),(w_b,w_q),(w_w,w_u),(w_b,w_b),(w_x,w_h),(w_q, w_a)\}$
+\item $(x_2,y_5,z_1) \rightarrow \{ (w_a,w_b)\}$
+\item $(x_2,y_4,z_1) \rightarrow \{ (w_a,w_b)\}$
+\item $(x_3,y_7,z_3) \rightarrow \{ (w_a,w_x),(w_a,w_b), (w_x,w_h),(w_b,w_q),(w_w,w_u),(w_z,w_z),(w_b, w_b),(w_\phi, w_z)\}$
+\item $(x_3,y_1,z_1) \rightarrow \{ (w_a,w_b)\}$
+\end{itemize}
+
+\vskip 0.2in
+
+Also let's see the table $Y$ as a set:
+
+\begin{itemize}
+\item $\{ (w_a,w_b),(w_z,w_z), (w_\phi,w_z),(w_b,w_q),(w_w,w_u),(w_b,w_b),(w_x, w_h)\}$
+\end{itemize}
+
+\newpage
+
+This is a clear representation of our data and we are ready to calculate the result of $X \div Y$. To simplify notation let's define a "function" in our universe, called \textbf{setOf()} that retrieves the set of tuples of what we pass to it as a parameter. Let's say, if we pass the parameter $Y$, it retrieves the set of it's tuples; if we pass three values $x,y,z$, it retrieves one of the sets defined before.
+
+\vskip 0.2in
+It's really easy to check that:
+
+\begin{itemize}
+  \item $setOf(Y) \subseteq setOf(x_1,y_2,z_2)$ 
+  \item $setOf(Y) \not\subseteq setOf(x_2,y_5,z_1) $ 
+  \item $setOf(Y) \not\subseteq setOf(x_2,y_4,z_1) $ 
+  \item $setOf(Y) \subseteq setOf(x_3,y_7,z_3) $ 
+  \item $setOf(Y) \not\subseteq setOf(x_3,y_1,z_1) $ 
+\end{itemize}
+
+\vskip 0.2in
+And the result of $X \div Y$ is:
+
+\vskip 0.2in
+\begin{tabular}{lllll}
+  \hline
+  A & B & C\\
+  \hline
+  \multicolumn{1}{|c|}{$x_1$} & \multicolumn{1}{c|}{$y_2$} & \multicolumn{1}{c|}{$z_2$} \\ \hline
+  \multicolumn{1}{|c|}{$x_3$} & \multicolumn{1}{c|}{$y_7$} & \multicolumn{1}{c|}{$z_3$} \\ \hline
+\end{tabular}
+
+\vskip 0.2in
+I think this is a really good way to understand what the division operator does in relational algebra. This operator is the most confusing at first for some people, specially when using it with operands that have more than one attribute each.
+
+\subsection*{Simple query example}
+
+\vskip 0.2in
+Let's see a quick example of how to use it to write a query. Let's say we have a simplified version of Blockbuster's database and some relations of it's relational schema are: 
+
+\begin{lstlisting}
+CLIENTS(clientID, name, lastname)
+MOVIES(movieID, title, description, year, duration, language)
+RENTALS(clientID, movieID, date)
+\end{lstlisting}
+
+We want a relational algebra query that retrieves the ids of the clients that rented all the movies of the year 2010. \\
+
+First of all we can find the ids of all the movies of the year 2010:\\
+
+$A = \prod_{movieID}(\sigma_{year = 2010}MOVIES)$ \\
+
+Now, let's project the relation RENTALS by clientID and movieID so we retrieve all the rentals ever done: \\
+
+$B = \prod_{clientID, movieID}RENTALS$ \\
+
+Let's divide B by A! Note that the second row of B is the same that the only row of A. By doing this we are asking for all the clientIDs that are in a relation with all the movies of 2010. To finish the query we use the JOIN operator and project the result by name and lastname: \\
+
+$Solution = \prod_{name, lastname}(CLIENTS * (B \div A)) $
+
+\end{document}

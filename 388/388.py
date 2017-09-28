@@ -1,6 +1,6 @@
 '''
 
- How many numbers of 7 or less digits whose last 3 (digits) are 388 are multiples of 388?
+ How many numbers of 7 or less digits whose last 3 (digits) are multiples of 388?
 
 
 '''
