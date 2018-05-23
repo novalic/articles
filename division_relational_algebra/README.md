@@ -5,4 +5,4 @@ The division operator might be the hardest operator to understand on the relatio
 ## What's in this folder?
 
 - The latex file of the document.
-- The latest [PDF](https://github.com/novalic/mathProblems/blob/master/division_relational_algebra/division-relational-algebra.pdf) generated from the latex file.
+- The latest [PDF](https://github.com/novalic/articles/blob/master/division_relational_algebra/division-relational-algebra.pdf) generated from the latex file.
